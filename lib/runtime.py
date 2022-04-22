@@ -1,11 +1,10 @@
 import timeit
-from tracemalloc import stop
 
 class Runtime:
-    def start(self):
+    def start():
         start = timeit.default_timer()
         return start 
-    def stop(self,start):
+    def stop(start):
         stop = timeit.default_timer()
         print(f"Runtime: {stop-start}")
         return stop

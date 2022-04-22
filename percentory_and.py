@@ -21,11 +21,8 @@ def NAND(x1, x2):
 
 
 if __name__ == '__main__':
-    time = Runtime()
-    f = File()
-
-    start =  time.start()
-    data = f.readInt(sys.argv[1]) 
+    start =  Runtime.start()
+    data = File.readInt(sys.argv[1]) 
     print(*(AND(data[i][0],data[i][1]) for i in range(len(data))))
     print(*(NAND(data[i][0],data[i][1]) for i in range(len(data))))
-    stop = time.stop(start)
+    stop = Runtime.stop(start)

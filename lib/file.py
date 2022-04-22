@@ -1,6 +1,6 @@
 import os 
 class File:
-    def readInt(self,path):
+    def readInt(path):
         intData = []
         try:
             file = open(path)
