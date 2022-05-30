@@ -1,3 +1,4 @@
+
 import numpy as np
 import sys
 from lib.file import File
@@ -18,7 +19,6 @@ def NAND(x1, x2):
     if sum(tmp) <= theta:
         return 0
     return 1
-
 
 if __name__ == '__main__':
     start =  Runtime.start()
