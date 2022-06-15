@@ -1,20 +1,12 @@
-# from common import softmax, cross_entropy_error, numerical_gradient
-import numpy as np
-# import matplotlib.pyplot as plt
+from mimetypes import init
+from re import I
+from common import *
 
-# def f(x):
-#     return x[0]**2 + x[1]**2
+def f(x):
+    return x[0]**2 + x[1]**2
 
+x = np.array([[1.0,2.0,3.0],[4.0,5.0,6.0]])
 
-# def loss(t,y):
-#     z = softmax(y)
-#     loss = cross_entropy_error(z,t)
-#     return loss
-
-# t = np.random.rand(2)
-# print(loss(f,t,y))
-
-a = np.random.rand(2,3)
-
-for i, x in enumerate(a):
-    print(i,x)
+for i in range(3):
+    print("-------------",i*100," steps-------------------")
+    print(gradient_descent(f,init_x = x,step_num=100*i))

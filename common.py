@@ -19,25 +19,38 @@ def cross_entropy_error(y,t):
     return error
 
 def numerical_gradient(f,x):
-    delta = 1e-7
+    """f: function
+        x: numpy array"""
+    h = 1e-4
+    
+    gradients = np.ones_like(x)
 
-    grad = np.ones_like(x)
-
-    for i in range(x.size):
-        # get current x value
+    for i in range(x.ndim):
         tmp = x[i]
 
-        #f(x+h)
-        x[i] = tmp + delta
-        fxh1 = f(x)
+        #fx+h 
+        x[i] = tmp + h
+        fx1 = f(x[i])
 
-        #f(x-h)
-        x[i] = tmp - delta 
-        fxh2 = f(x)
+        #fx-h
+        x[i] = tmp -h
+        fx2 = f(x[i])
 
-        #reset x 
+        #rest x
         x[i] = tmp
 
-        #restore grad
-        grad[i] = (fxh1 - fxh2)/ 2*delta
-    return grad
+        #get gradient of x
+        gradient = (fx1 - fx2) / (2*h)
+
+        #store gradient of x 
+        gradients[i] = gradient
+    return gradients 
+
+def gradient_descent(f,init_x,lr=0.01,step_num = 100):
+    x = init_x
+
+    for i in range(step_num):
+        gradient = numerical_gradient(f,x)
+        x -= lr*gradient        
+
+    return x 
