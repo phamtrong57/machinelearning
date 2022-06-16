@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.preprocessing import maxabs_scale
 from soupsieve import escape
 
+def sigmoid(x):
+    return (1/(1 + np.exp(-x)))
 def softmax(a):
     # init max vlue, format exp value of a, and sum of it. 
     max_a = np.max(a)
@@ -12,40 +14,58 @@ def softmax(a):
     y = exp_a / sum_exp_a
     return y 
 
-def cross_entropy_error(y,t):
+def cross_entropy_error(predict_output,raw_output):
 #    escape of log(0) error that will given a noncountable -integer 
     delta = 1e-7
-    error = -np.sum(t*np.log(y + delta))
+    error = -np.sum(raw_output*np.log(predict_output + delta))
     return error
 
 def numerical_gradient(f,x):
     """f: function
         x: numpy array"""
     h = 1e-4
-    
-    gradients = np.ones_like(x)
+    grads = np.zeros_like(x)
+    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
+    while not it.finished:
+        idx = it.multi_index
+        tmp = x[idx]
 
-    for i in range(x.ndim):
-        tmp = x[i]
+        #fxh1 
+        x[idx] = tmp + h
+        fxh1 = f(x)
 
-        #fx+h 
-        x[i] = tmp + h
-        fx1 = f(x[i])
+        #fxh2
+        x[idx] = tmp - h
+        fxh2 = f(x)
 
-        #fx-h
-        x[i] = tmp -h
-        fx2 = f(x[i])
+        grads[idx] = ((fxh1 - fxh2)/(2*h))
+        x[idx] = tmp
 
-        #rest x
-        x[i] = tmp
+        print("grads:")
+        print(grads)
+        it.iternext()
+    return grads 
 
-        #get gradient of x
-        gradient = (fx1 - fx2) / (2*h)
 
-        #store gradient of x 
-        gradients[i] = gradient
-    return gradients 
-
+def _numerical_gradient(f, x):
+    h = 1e-4 # 0.0001
+    grad = np.zeros_like(x)
+    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
+    while not it.finished:
+        idx = it.multi_index
+        tmp_val = x[idx]
+        x[idx] = tmp_val + h
+        fxh1 = f(x) # f(x+h)
+        
+        x[idx] = tmp_val - h 
+        fxh2 = f(x) # f(x-h)
+        grad[idx] = (fxh1 - fxh2) / (2*h)
+        
+        print("grad:",grad)
+        x[idx] = tmp_val # 値を元に戻す
+        it.iternext()   
+        
+    return grad
 def gradient_descent(f,init_x,lr=0.01,step_num = 100):
     x = init_x
 
