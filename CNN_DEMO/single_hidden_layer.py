@@ -30,7 +30,7 @@ class SingleHiddenLayerNet:
 
 if __name__ == "__main__":
 
-    Net = SingleHiddenLayerNet(2,1,1) # Create a new NetWork
+    Net = SingleHiddenLayerNet(2,1,1) # Create a new NetWork with 1 input layer, 1 hidden layer and 1 output layer
     print("Type [ python single_hidden_layer.py 1 0 ] or [ python3 single_hidden_layer.py 1 0 ] to test model")
 
     input_vector = np.array(get_argv([1,2]),dtype=np.int8) # get input numbers
