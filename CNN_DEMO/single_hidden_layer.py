@@ -1,9 +1,9 @@
-from pickletools import int4
 import numpy as np
 
 # set current path to CNN_DEMO in order to use functions inside com folder
 import sys
-sys.path.append("/Users/phamtrongdev/Coding/machinelearning")
+import os
+sys.path.append(str(os.getcwd()))
 from com.actvations import sigmoid
 from com.sysargv import get_argv
 
@@ -23,8 +23,8 @@ class SingleHiddenLayerNet:
         outputs = 0
 
         # get neuron of each layers
-        z1 = sigmoid(np.dot(inputs_vector,self.parameters["W1"]) + self.parameters["B1"]) #neuron in the hidden layer
-        output = sigmoid(np.dot(z1,self.parameters["W2"]) + self.parameters["B2"]) # neuron in the output layer
+        hidden_layer_neuron = sigmoid(np.dot(inputs_vector,self.parameters["W1"]) + self.parameters["B1"]) #neuron in the hidden layer
+        output = sigmoid(np.dot(hidden_layer_neuron,self.parameters["W2"]) + self.parameters["B2"]) # neuron in the output layer
 
         return output
 
@@ -33,6 +33,6 @@ if __name__ == "__main__":
     Net = SingleHiddenLayerNet(2,1,1) # Create a new NetWork with 1 input layer, 1 hidden layer and 1 output layer
     print("Type [ python single_hidden_layer.py 1 0 ] or [ python3 single_hidden_layer.py 1 0 ] to test model")
 
-    input_vector = np.array(get_argv([1,2]),dtype=np.int8) # get input numbers
+    input_vector = np.array(get_argv([1,2]),dtype=np.float16) # get input numbers
 
     print(f"Test Case : {input_vector[0]} {input_vector[1]} -> {Net.predict(input_vector)[0]:.1f}")
