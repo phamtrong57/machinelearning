@@ -1,3 +1,4 @@
+from pyexpat import model
 import numpy as np
 
 # set current path to CNN_DEMO in order to use functions inside com folder
@@ -6,6 +7,8 @@ import os
 sys.path.append(str(os.getcwd()))
 from com.actvations import sigmoid
 from com.sysargv import get_argv
+from com.gradient import numericial_gradient
+from com.loss_fucntions import mean_square_erorr
 
 class SingleHiddenLayerNet:
     def __init__(self,input_size , output_size, hidden_size = 2):
@@ -18,16 +21,17 @@ class SingleHiddenLayerNet:
         print("-"*50,"\n")
 
         # init parameters (w1, w2, b1, b2) {wx: weights, bx: bias}
-        # self.parameters  = {"w1":np.array([[20,-20],[20,-20]]), "w2":np.array([20,20]), "b1":np.array([-10,30]),"b2":np.array([-30])}
-        self.parameters = {"W1":np.ones((input_size,hidden_size)),
-        "W2":np.ones((hidden_size,output_size)),
-        "B1":np.ones(input_size),"B2":np.ones(hidden_size)}
+        self.parameters  = {"W1":np.array([[20,-20],[20,-20]]), "W2":np.array([20,20]), "B1":np.array([-10,30]),"B2":np.array([-30])}
+        # self.parameters = {}
+        # self.parameters = {"W1":np.ones((input_size,hidden_size)),
+        # "W2":np.ones((hidden_size,output_size)),
+        # "B1":np.ones(input_size),"B2":np.ones(hidden_size)}
+    def set_parameters(self,parameters):
+        self.parameters["W1"] = parameters["W1"] 
+        self.parameters["W2"] = parameters["W2"] 
+        self.parameters["B1"] = parameters["B1"] 
+        self.parameters["B2"] = parameters["B2"] 
 
-    def init_parameter(self):
-        self.parameters["W1"] = np.random.normal(1.0,0.5,(self.input_size,self.hidden_size))
-        self.parameters["W2"] = np.random.normal(1.0,0.5,(self.hidden_size,self.output_size))
-        self.parameters["B1"] = np.random.normal(1.0,0.5,self.input_size)
-        self.parameters["B2"] = np.random.normal(1.0,0.5,self.output_size)
     def predict(self,inputs):
         # setup input, output vector
         inputs_vector = inputs
@@ -38,7 +42,7 @@ class SingleHiddenLayerNet:
         output = sigmoid(np.dot(hidden_layer_neuron,self.parameters["W2"]) + self.parameters["B2"]) # neuron in the output layer
 
         return output
-
+    
 if __name__ == "__main__":
 
     Net = SingleHiddenLayerNet(2,1,2) # Create a new NetWork with 1 input layer, 1 hidden layer and 1 output layer
