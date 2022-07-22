@@ -24,14 +24,14 @@ def train(XOR_net,input_matrix,raw_output_matrix):
         gradients = XOR_net.gradient_descent(input_matrix,raw_output_matrix)
 
         #update the paramters with calculated gradients
-        learning_rate = 30
+        learning_rate = 1
         XOR_net.update_parameters(gradients,learning_rate)
 
         step += 1 
         loss_data = np.append(loss_data,loss) #store loss in order to plot after
 
     plt.plot(loss_data)
-    print("STEP:",step)
+    print("STEP:",step)         
     print("Finally Prameters:\n",XOR_net.parameters)
     print("Input after training:",XOR_net.predict(input_matrix)) 
     plt.show()
