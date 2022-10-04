@@ -1,6 +1,7 @@
-import tkinter as ttk
 from tkinter import *
 
-root = ttk.Tk()
-frame = ttk.Frame(root, padding = 10)
-                    
+window = Tk()
+
+window.title("Welcome to LikeGeeks app")
+
+window.mainloop()
