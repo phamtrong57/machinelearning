@@ -45,16 +45,19 @@ def training(model):
     plt.plot(epoch_loss)
     plt.savefig(os.path.join(os.getcwd(),"Figures","Adagrad1.pdf")) # save graph into Figures folder
 
+    # save model
+    torch.save(model,os.path.join(os.getcwd(),"Backup","XOR_PyTorch.pth"))
+
 def test(model,input_data):
     for x in input_data:
         print(model(x))
 
-def display_paramters(model,str):
+def display_parameters(model,str):
     print(f"###### Model Parameters {str} Training#######")
     print("W1:\n",model.hidden_layer.weight)
     print("W1:\n",model.hidden_layer.bias)
-    print("W2:\n",model.output_layer.weight)
-    print("W2:\n",model.output_layer.bias)
+    print("W2:\n",model.hidden_layer2.weight)
+    print("W2:\n",model.hidden_layer2.bias)
 
 if __name__ == "__main__":
     
@@ -66,13 +69,13 @@ if __name__ == "__main__":
     model = NeuralNetwork()
 
     # display parameter of model before training
-    display_paramters(model,"Before") 
+    display_parameters(model,"Before") 
 
     # start training
     training(model)
 
     # display parameter of model after training
-    display_paramters(model,"After") 
+    display_parameters(model,"After") 
 
     # test model
     test(model,input_data) 
