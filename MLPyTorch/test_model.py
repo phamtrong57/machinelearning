@@ -1,19 +1,21 @@
 import os
 import numpy as np
 import torch
-
-from MLModel import NeuralNetwork
+import matplotlib.pyplot as plt
 from train import test, display_parameters
 
 if __name__ == "__main__":
+    model_name = "SGD"
     # load model from Backup folder
-    model = torch.load(os.path.join(os.getcwd(),"Backup","XOR_PyTorch.pth"))
-    
-    # create data for testing
-    input_data = torch.tensor(np.array([[0,0],[0,1],[1,0],[1,1]]),dtype=torch.float)
+    for hidden_size in (2**p for p in range(0,6)):
 
-    # test model
-    test(model,input_data)
+        model = torch.load(os.path.join(os.getcwd(),"Backup",f"{model_name}_{hidden_size}.pth"))
+        
+        # create data for testing
+        input_data = torch.tensor(np.array([[0,0],[0,1],[1,0],[1,1]]),dtype=torch.float)
 
-    # display parameters of model
-    display_parameters(model,"Pretrained")
+        # test model
+        test(model,input_data)
+
+        # display parameters of model
+        display_parameters(model,"Pretrained")
