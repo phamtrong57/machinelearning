@@ -82,12 +82,16 @@ if __name__ == "__main__":
     output_data = torch.tensor(np.array([[0],[1],[1],[0]]),dtype=torch.float)
 
     # start training
-    model_name = "Momentum_Xavier"
+    # model_name = "Momentum_Xavier"
+    # model_name = "Momentum"
+    # model_name = "SGD"
+    model_name = "ADaGrad"
+
     for hidden_size in (2**p for p in range(0, 6)):
         print(f"-----------------------{hidden_size}----------------------\n")
         # init model
         model = NeuralNetwork(input_size=2, hidden_size=hidden_size, output_size=1)
-        model.apply(init_weights)
+        # model.apply(init_weights)
 
         # display parameter of model before training
         display_parameters(model,"Before") 

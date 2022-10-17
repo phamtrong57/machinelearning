@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from train import test, display_parameters
 
 if __name__ == "__main__":
-    model_name = "SGD"
+    model_name = "ADaGrad"
     # load model from Backup folder
     for hidden_size in (2**p for p in range(0,6)):
 
@@ -19,3 +19,4 @@ if __name__ == "__main__":
 
         # display parameters of model
         display_parameters(model,"Pretrained")
+    plt.show()
